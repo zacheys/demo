@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meadow's End Farm — A Vermont Farmhouse Retreat in Chester</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Karla:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{
+  --white:#FAF9F6;--off:#F0ECE4;--sand:#DDD5C8;
+  --drift:#A89B86;--shell:#7A7168;
+  --ink:#1E1D1A;--ink2:#34312B;--ink-s:#5C5650;
+  --ocean:#4A7352;--ocean-l:#5C8A64;
+  --coral:#C4834A;
+  --card:#FFFFFF;
+}
+body{font-family:'Karla',sans-serif;background:var(--white);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+nav{position:fixed;top:0;width:100%;z-index:99;display:flex;justify-content:space-between;align-items:center;padding:20px 48px;transition:all .4s}
+nav.s{background:rgba(250,249,246,.93);backdrop-filter:blur(20px);padding:14px 48px;border-bottom:1px solid rgba(0,0,0,.04)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--white);text-decoration:none;transition:color .3s}
+nav.s .logo{color:var(--ink)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:.75rem;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.7);text-decoration:none;transition:color .3s}
+nav.s .nav-links a{color:var(--shell)}
+.nav-links a:hover{color:var(--white)}
+nav.s .nav-links a:hover{color:var(--ink)}
+.nav-book{padding:10px 24px;background:var(--ocean);color:var(--white) !important;border-radius:100px;font-size:.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all .25s}
+.nav-book:hover{background:var(--ocean-l) !important;transform:translateY(-1px)}
+
+.hero{position:relative;height:100vh;overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}.slide.active{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover}
+.slide::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(30,29,26,.75) 0%,rgba(30,29,26,.2) 40%,rgba(30,29,26,.1) 100%)}
+.hero-content{position:absolute;bottom:0;left:0;right:0;z-index:10;padding:0 48px 64px}
+.hero-content h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,5.5vw,5rem);font-weight:300;color:var(--white);line-height:1.08;letter-spacing:-1px;margin-bottom:14px}
+.hero-content h1 em{font-style:italic;color:var(--sand)}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.65);font-weight:300;max-width:460px;line-height:1.7;margin-bottom:28px}
+.hero-stats{display:flex;gap:24px;align-items:center;margin-bottom:32px}
+.hero-stat{font-size:.8rem;color:rgba(255,255,255,.6)}.hero-stat strong{color:var(--white);font-weight:600}
+.hdot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.25)}
+.hero-btns{display:flex;gap:12px}
+.btn-o{padding:14px 32px;background:var(--ocean);color:var(--white);border:none;border-radius:100px;font-family:'Karla',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;text-decoration:none;transition:all .3s}
+.btn-o:hover{background:var(--ocean-l);transform:translateY(-2px);box-shadow:0 8px 24px rgba(74,115,82,.25)}
+.btn-w{padding:14px 28px;background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.3);border-radius:100px;font-family:'Karla',sans-serif;font-size:.85rem;font-weight:400;cursor:pointer;text-decoration:none;transition:all .25s}
+.btn-w:hover{border-color:var(--white);background:rgba(255,255,255,.08)}
+.slide-dots{position:absolute;bottom:28px;right:48px;z-index:10;display:flex;gap:8px}
+.sdot{width:32px;height:3px;border-radius:3px;background:rgba(255,255,255,.25);cursor:pointer;transition:all .3s;border:none}
+.sdot.active{background:var(--white);width:48px}
+
+.highlights{padding:52px 48px;background:var(--white);border-bottom:1px solid rgba(0,0,0,.04)}
+.hl-inner{max-width:860px;margin:0 auto;display:flex;justify-content:center;gap:56px;text-align:center}
+.hl h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400}
+.hl p{font-size:.72rem;color:var(--shell);font-weight:400;letter-spacing:.8px;text-transform:uppercase;margin-top:2px}
+
+.sec{padding:96px 48px}
+.sl{font-size:.65rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--ocean);margin-bottom:12px}
+.st{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;line-height:1.15;color:var(--ink);margin-bottom:14px}
+.ss{font-size:.92rem;color:var(--shell);font-weight:300;max-width:440px;line-height:1.75}
+
+.about{background:var(--white)}
+.about-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.about-img{height:420px;border-radius:10px;overflow:hidden}.about-img img{width:100%;height:100%;object-fit:cover}
+.about-feats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
+.af{display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--ink2);font-weight:400}
+.af svg{color:var(--ocean);flex-shrink:0}
+
+.gallery{background:var(--off)}
+.gallery-head{text-align:center;max-width:500px;margin:0 auto 48px}.gallery-head .ss{margin:0 auto}
+.ggrid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.gitem{border-radius:8px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;position:relative}
+.gitem img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.gitem:hover img{transform:scale(1.05)}
+.gitem:nth-child(1){grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
+.gitem-label{position:absolute;bottom:10px;left:10px;font-size:.65rem;font-weight:500;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.9);background:rgba(0,0,0,.3);padding:4px 12px;border-radius:100px;backdrop-filter:blur(6px);opacity:0;transition:opacity .3s}
+.gitem:hover .gitem-label{opacity:1}
+
+.lightbox{display:none;position:fixed;inset:0;z-index:200;background:rgba(20,19,18,.95);align-items:center;justify-content:center;flex-direction:column}
+.lightbox.open{display:flex}
+.lb-img{max-width:85vw;max-height:80vh;border-radius:6px;object-fit:contain}
+.lb-close{position:absolute;top:24px;right:32px;background:none;border:none;color:var(--white);font-size:1.6rem;cursor:pointer;opacity:.6;transition:opacity .2s}.lb-close:hover{opacity:1}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:var(--white);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:all .2s}.lb-nav:hover{background:rgba(255,255,255,.15)}
+.lb-prev{left:24px}.lb-next{right:24px}
+.lb-counter{margin-top:16px;font-size:.78rem;color:rgba(255,255,255,.4);font-weight:300}
+
+.amenities{background:var(--white)}
+.amen-head{text-align:center;max-width:500px;margin:0 auto 48px}.amen-head .ss{margin:0 auto}
+.amen-grid{max-width:860px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.amen-item{padding:22px 24px;background:var(--off);border-radius:10px}
+.amen-item h4{font-size:.84rem;font-weight:600;margin-bottom:2px}.amen-item p{font-size:.74rem;color:var(--shell);font-weight:300}
+
+.local{background:var(--off)}
+.local-head{text-align:center;max-width:520px;margin:0 auto 48px}.local-head .ss{margin:0 auto}
+.local-grid{max-width:880px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.local-item{padding:22px 24px;background:var(--card);border-radius:10px;transition:transform .25s}.local-item:hover{transform:translateY(-2px)}
+.local-item h4{font-size:.86rem;font-weight:600;margin-bottom:2px}.local-item p{font-size:.78rem;color:var(--shell);font-weight:300;line-height:1.5}
+.local-dist{font-size:.68rem;color:var(--ocean);font-weight:600;margin-top:4px}
+
+.reviews{background:var(--white)}
+.reviews-head{text-align:center;max-width:500px;margin:0 auto 48px}.reviews-head .ss{margin:0 auto}
+.rev-grid{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rev-card{padding:28px;background:var(--off);border-radius:10px}
+.rev-stars{color:var(--coral);font-size:.85rem;letter-spacing:2px;margin-bottom:12px}
+.rev-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--ink2);line-height:1.6;margin-bottom:14px}
+.rev-author{font-size:.78rem;font-weight:600}.rev-date{font-size:.7rem;color:var(--shell);font-weight:300;margin-top:2px}
+
+.rules{background:var(--off)}
+.rules-inner{max-width:700px;margin:0 auto}
+.rules-head{text-align:center;margin-bottom:40px}.rules-head .ss{margin:0 auto}
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rule{padding:20px 24px;background:var(--card);border-radius:10px}
+.rule h4{font-size:.84rem;font-weight:600;margin-bottom:2px}.rule p{font-size:.76rem;color:var(--shell);font-weight:300;line-height:1.5}
+
+.booking{background:var(--ink);color:var(--white)}
+.book-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.book-left .sl{color:var(--drift)}
+.book-left .st{color:var(--white)}
+.book-left .ss{color:var(--drift)}
+.book-details{margin-top:28px;display:flex;flex-direction:column;gap:14px}
+.bd-item{display:flex;align-items:center;gap:12px}
+.bd-icon{width:36px;height:36px;border-radius:8px;flex-shrink:0;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center}
+.bd-icon svg{width:16px;height:16px;color:var(--drift)}
+.bd-item h4{font-size:.84rem;font-weight:500}.bd-item p{font-size:.76rem;color:var(--drift);font-weight:300}
+.book-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:34px}
+.book-price{text-align:center;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.book-price .from{font-size:.72rem;color:var(--drift);letter-spacing:.5px;text-transform:uppercase}
+.book-price .rate{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:400;margin:4px 0}
+.book-price .per{font-size:.78rem;color:var(--drift);font-weight:300}
+.bf{margin-bottom:14px}
+.bf label{display:block;font-size:.74rem;font-weight:500;color:rgba(255,255,255,.5);margin-bottom:5px}
+.bf input,.bf select,.bf textarea{width:100%;padding:12px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:8px;color:var(--white);font-family:'Karla',sans-serif;font-size:.84rem;outline:none;transition:border-color .25s}
+.bf input::placeholder,.bf textarea::placeholder{color:rgba(255,255,255,.18)}
+.bf input:focus,.bf select:focus,.bf textarea:focus{border-color:var(--ocean)}
+.bf select{-webkit-appearance:none;appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%23666' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.bf select option{background:var(--ink);color:var(--white)}
+.bf textarea{resize:vertical;min-height:68px}
+.bfr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.book-submit{width:100%;padding:14px;margin-top:4px;background:var(--ocean);color:#fff;border:none;border-radius:100px;font-family:'Karla',sans-serif;font-size:.88rem;font-weight:500;cursor:pointer;transition:all .25s}
+.book-submit:hover{background:var(--ocean-l);transform:translateY(-1px)}
+.book-note{text-align:center;margin-top:10px;font-size:.7rem;color:rgba(255,255,255,.2);font-weight:300}
+#bookOk{display:none;text-align:center;padding:40px 0}
+#bookOk h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;margin-bottom:8px}
+#bookOk p{color:var(--drift);font-weight:300;font-size:.88rem;line-height:1.6}
+
+footer{padding:40px 48px;background:var(--off);text-align:center}
+.foot-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
+footer p{font-size:.74rem;color:var(--shell);font-weight:300}
+.foot-pw{margin-top:12px;font-size:.65rem;color:var(--drift)}
+.foot-pw a{color:var(--ocean);text-decoration:none}.foot-pw a:hover{text-decoration:underline}
+
+.r{opacity:0;transform:translateY(18px);transition:all .65s cubic-bezier(.16,1,.3,1)}.r.v{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  nav{padding:14px 20px}.nav-links a:not(.nav-book){display:none}
+  .sec{padding:68px 20px}.hero-content{padding:0 20px 48px}
+  .about-grid{grid-template-columns:1fr;gap:32px}.about-img{height:260px}
+  .ggrid{grid-template-columns:1fr 1fr}.gitem:nth-child(1){grid-column:span 2;grid-row:span 1}
+  .amen-grid{grid-template-columns:repeat(2,1fr)}
+  .local-grid,.rules-grid{grid-template-columns:1fr}
+  .rev-grid{grid-template-columns:1fr}
+  .book-inner{grid-template-columns:1fr;gap:36px}
+  .hl-inner{flex-wrap:wrap;gap:28px}.hero-stats{flex-wrap:wrap;gap:12px}
+  .bfr{grid-template-columns:1fr}.slide-dots{right:20px;bottom:20px}
+  .st{font-size:2rem}
+}
+@media(max-width:500px){.amen-grid{grid-template-columns:1fr}.about-feats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav id="n">
+  <a href="#" class="logo">Meadow's End</a>
+  <div class="nav-links">
+    <a href="#about">The Farm</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#area">Local Guide</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#book" class="nav-book">Book Now</a>
+  </div>
+</nav>
+
+<section class="hero" id="top">
+  <div class="slide active"><img src="imgs/outsidefront.jpg" alt="Meadow's End Farm exterior"></div>
+  <div class="slide"><img src="imgs/patio.jpg" alt="Screened porch"></div>
+  <div class="slide"><img src="imgs/livingroom.jpg" alt="Living room with loft"></div>
+  <div class="slide"><img src="imgs/outdoor.jpg" alt="Wooded trails on property"></div>
+  <div class="slide"><img src="imgs/dining_room.jpg" alt="Dining room with library wall"></div>
+  <div class="hero-content">
+    <h1>Where the mountains<br>meet <em>home.</em></h1>
+    <p class="hero-sub">An 1834 farmhouse on 11 private acres in the Green Mountains of Vermont. Meadows, forests, and a pace of life you forgot existed.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>4</strong> Bedrooms</div><div class="hdot"></div>
+      <div class="hero-stat"><strong>2</strong> Baths</div><div class="hdot"></div>
+      <div class="hero-stat"><strong>10</strong> Guests</div><div class="hdot"></div>
+      <div class="hero-stat"><strong>11 Acres</strong></div>
+    </div>
+    <div class="hero-btns">
+      <a href="#book" class="btn-o">Check Availability</a>
+      <a href="#gallery" class="btn-w">View Gallery</a>
+    </div>
+  </div>
+  <div class="slide-dots">
+    <button class="sdot active" onclick="goSlide(0)"></button>
+    <button class="sdot" onclick="goSlide(1)"></button>
+    <button class="sdot" onclick="goSlide(2)"></button>
+    <button class="sdot" onclick="goSlide(3)"></button>
+    <button class="sdot" onclick="goSlide(4)"></button>
+  </div>
+</section>
+
+<section class="highlights">
+  <div class="hl-inner r">
+    <div class="hl"><h3>$350</h3><p>Per night</p></div>
+    <div class="hl"><h3>4.95</h3><p>Guest rating</p></div>
+    <div class="hl"><h3>11</h3><p>Private acres</p></div>
+    <div class="hl"><h3>2 night</h3><p>Minimum stay</p></div>
+  </div>
+</section>
+
+<section class="about sec" id="about">
+  <div class="about-grid">
+    <div class="about-img r"><img src="imgs/livingroomside.jpg" alt="Living room"></div>
+    <div class="r" style="transition-delay:.1s">
+      <div class="sl">The Farm</div>
+      <h2 class="st">Historic charm meets modern comfort.</h2>
+      <p class="ss" style="margin-top:16px">Meadow's End Farm is a restored 1834 farmhouse nestled at the end of a quiet dirt road in Chester, Vermont. With wide plank floors, exposed ceiling beams, original 12-over-12 windows, and an open, airy feel, this home carries nearly two centuries of character while offering every modern convenience.</p>
+      <p class="ss" style="margin-top:12px">Surrounded by meadows, forest, and a small pond on 11 private acres, this is the kind of place where you slow down, breathe deep, and remember what a real getaway feels like.</p>
+      <div class="about-feats">
+        <div class="af"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>11 private acres to explore</div>
+        <div class="af"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Gourmet kitchen with Wolf range</div>
+        <div class="af"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Screened porch with gas fireplace</div>
+        <div class="af"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Outdoor fire pit</div>
+        <div class="af"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Dog friendly</div>
+        <div class="af"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>12 min to Magic Mountain</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery sec" id="gallery">
+  <div class="gallery-head r">
+    <div class="sl">Gallery</div>
+    <h2 class="st">See for yourself.</h2>
+    <p class="ss">Wide plank floors, exposed beams, and 11 acres of Vermont countryside.</p>
+  </div>
+  <div class="ggrid r">
+    <div class="gitem" onclick="openLB(0)"><img src="imgs/outsidefront.jpg" alt="Farmhouse exterior"><span class="gitem-label">The Farmhouse</span></div>
+    <div class="gitem" onclick="openLB(1)"><img src="imgs/livingroom.jpg" alt="Living room"><span class="gitem-label">Living Room</span></div>
+    <div class="gitem" onclick="openLB(2)"><img src="imgs/livingroomside.jpg" alt="Sitting area"><span class="gitem-label">Sitting Area</span></div>
+    <div class="gitem" onclick="openLB(3)"><img src="imgs/kitchen.jpg" alt="Kitchen"><span class="gitem-label">Kitchen</span></div>
+    <div class="gitem" onclick="openLB(4)"><img src="imgs/dining_room.jpg" alt="Dining room"><span class="gitem-label">Dining Room</span></div>
+    <div class="gitem" onclick="openLB(5)"><img src="imgs/mainbr.jpg" alt="Main bedroom"><span class="gitem-label">Main Suite</span></div>
+    <div class="gitem" onclick="openLB(6)"><img src="imgs/bedroom1.jpg" alt="Bedroom"><span class="gitem-label">King Bedroom</span></div>
+    <div class="gitem" onclick="openLB(7)"><img src="imgs/bedroom2.jpg" alt="Queen bedroom"><span class="gitem-label">Queen Bedroom</span></div>
+    <div class="gitem" onclick="openLB(8)"><img src="imgs/bedroom3.jpg" alt="Loft bedroom"><span class="gitem-label">Loft Bedroom</span></div>
+    <div class="gitem" onclick="openLB(9)"><img src="imgs/br4.jpg" alt="Bunk room"><span class="gitem-label">Bunk Room</span></div>
+    <div class="gitem" onclick="openLB(10)"><img src="imgs/patio.jpg" alt="Screened porch"><span class="gitem-label">Screened Porch</span></div>
+    <div class="gitem" onclick="openLB(11)"><img src="imgs/outsideback.jpg" alt="Backyard"><span class="gitem-label">Backyard</span></div>
+    <div class="gitem" onclick="openLB(12)"><img src="imgs/outdoor.jpg" alt="Wooded trails"><span class="gitem-label">Trails</span></div>
+    <div class="gitem" onclick="openLB(13)"><img src="imgs/br1.jpg" alt="Bathroom"><span class="gitem-label">Bathroom</span></div>
+    <div class="gitem" onclick="openLB(14)"><img src="imgs/br2.jpg" alt="Second bathroom"><span class="gitem-label">Second Bath</span></div>
+  </div>
+</section>
+
+<div class="lightbox" id="lb">
+  <button class="lb-close" onclick="closeLB()">&times;</button>
+  <button class="lb-nav lb-prev" onclick="navLB(-1)">&#8249;</button>
+  <button class="lb-nav lb-next" onclick="navLB(1)">&#8250;</button>
+  <img class="lb-img" id="lbImg" src="" alt="">
+  <div class="lb-counter" id="lbCount"></div>
+</div>
+
+<section class="amenities sec">
+  <div class="amen-head r">
+    <div class="sl">Amenities</div>
+    <h2 class="st">Everything you need.</h2>
+    <p class="ss">Modern conveniences in a historic setting.</p>
+  </div>
+  <div class="amen-grid r">
+    <div class="amen-item"><h4>Gourmet Kitchen</h4><p>Wolf oven and range, wine fridge, dishwasher</p></div>
+    <div class="amen-item"><h4>Screened Porch</h4><p>Gas fireplace, seating for cool evenings</p></div>
+    <div class="amen-item"><h4>Outdoor Fire Pit</h4><p>Adirondack chairs for marshmallow roasting</p></div>
+    <div class="amen-item"><h4>High-Speed WiFi</h4><p>Stream, work remotely, stay connected</p></div>
+    <div class="amen-item"><h4>Smart TVs</h4><p>Firesticks in 3 rooms</p></div>
+    <div class="amen-item"><h4>Game Room</h4><p>Foosball, ping pong, darts, board games</p></div>
+    <div class="amen-item"><h4>Washer &amp; Dryer</h4><p>Full-size, main level</p></div>
+    <div class="amen-item"><h4>Dog Friendly</h4><p>11 acres for your pup to roam</p></div>
+    <div class="amen-item"><h4>Solar Powerwall</h4><p>Seamless backup power during outages</p></div>
+  </div>
+</section>
+
+<section class="local sec" id="area">
+  <div class="local-head r">
+    <div class="sl">Local Guide</div>
+    <h2 class="st">Chester and the Green Mountains.</h2>
+    <p class="ss">Ski, hike, swim, or simply slow down.</p>
+  </div>
+  <div class="local-grid r">
+    <div class="local-item"><h4>Magic Mountain</h4><p>Classic Vermont ski area with uncrowded runs and an old-school feel. Great for families.</p><div class="local-dist">12 min drive</div></div>
+    <div class="local-item"><h4>Okemo Mountain Resort</h4><p>Full-service resort with over 120 trails, terrain parks, and a village base area.</p><div class="local-dist">25 min drive</div></div>
+    <div class="local-item"><h4>Bromley Mountain</h4><p>Family-friendly ski area with a south-facing exposure — sunny and warm by Vermont standards.</p><div class="local-dist">30 min drive</div></div>
+    <div class="local-item"><h4>Stratton Mountain</h4><p>Premium skiing with a charming base village, shops, and dining.</p><div class="local-dist">30 min drive</div></div>
+    <div class="local-item"><h4>Chester Village</h4><p>Quaint New England town center with shops, galleries, restaurants, and fresh maple syrup.</p><div class="local-dist">10 min drive</div></div>
+    <div class="local-item"><h4>Hiking Trails</h4><p>Countless trails nearby including sections of the Long Trail and Appalachian Trail.</p><div class="local-dist">On property &amp; nearby</div></div>
+    <div class="local-item"><h4>Lakes &amp; Swimming</h4><p>Echo Lake, Lake Rescue, and several swimming holes within a short drive.</p><div class="local-dist">15-25 min drive</div></div>
+    <div class="local-item"><h4>Antiquing &amp; Shopping</h4><p>Chester is known for its antique shops, art galleries, and unique local boutiques.</p><div class="local-dist">10 min drive</div></div>
+  </div>
+</section>
+
+<section class="reviews sec" id="reviews">
+  <div class="reviews-head r">
+    <div class="sl">Guest Reviews</div>
+    <h2 class="st">What guests are saying.</h2>
+    <p class="ss">Real stays, real feedback.</p>
+  </div>
+  <div class="rev-grid r">
+    <div class="rev-card">
+      <div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="rev-text">"This farmhouse is absolutely magical. The kids explored the meadows all day while we read on the screened porch. It felt like stepping back in time — but with great WiFi and a Wolf stove."</p>
+      <div class="rev-author">Michelle T.</div>
+      <div class="rev-date">October 2025</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="rev-text">"We brought 8 people for a ski weekend at Magic Mountain and Okemo. The house is perfectly set up for groups — the dining room seats everyone, the game room kept us up late, and the fire pit was the highlight."</p>
+      <div class="rev-author">David &amp; Rachel K.</div>
+      <div class="rev-date">February 2026</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="rev-text">"We've been coming to Vermont for 20 years and this is the best rental we've found. The property is stunning in fall — the colors from the porch were unreal. Our dog loved it too."</p>
+      <div class="rev-author">Karen S.</div>
+      <div class="rev-date">September 2025</div>
+    </div>
+  </div>
+</section>
+
+<section class="rules sec">
+  <div class="rules-inner">
+    <div class="rules-head r">
+      <div class="sl">House Rules</div>
+      <h2 class="st" style="margin:0 auto 14px">A few things to know.</h2>
+      <p class="ss" style="margin:0 auto">Simple guidelines to keep the farm great for everyone.</p>
+    </div>
+    <div class="rules-grid r">
+      <div class="rule"><h4>Check-in: 4:00 PM</h4><p>Early check-in available on request, subject to availability.</p></div>
+      <div class="rule"><h4>Check-out: 11:00 AM</h4><p>Late checkout may be available — just ask.</p></div>
+      <div class="rule"><h4>Strictly No Smoking</h4><p>No smoking, vaping, or any tobacco use inside or anywhere on the property.</p></div>
+      <div class="rule"><h4>Dogs Welcome</h4><p>Well-behaved dogs are welcome. Please clean up after them on the property.</p></div>
+      <div class="rule"><h4>Max 10 Guests</h4><p>Please respect the maximum occupancy at all times.</p></div>
+      <div class="rule"><h4>Respect the Property</h4><p>This is a historic 1834 home. Please treat it with care.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="booking sec" id="book">
+  <div class="book-inner">
+    <div class="book-left r">
+      <div class="sl">Book Your Stay</div>
+      <h2 class="st" style="color:var(--white)">Ready for your<br>Vermont escape?</h2>
+      <p class="ss" style="color:var(--drift)">Send us an inquiry and we'll confirm availability within a few hours. Book direct and save — no platform fees.</p>
+      <div class="book-details">
+        <div class="bd-item">
+          <div class="bd-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div><h4>Save 10%+ by booking direct</h4><p>No Airbnb service fees on your reservation</p></div>
+        </div>
+        <div class="bd-item">
+          <div class="bd-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 3v5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/></svg></div>
+          <div><h4>Response within 2 hours</h4><p>We confirm availability quickly</p></div>
+        </div>
+        <div class="bd-item">
+          <div class="bd-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M2 7h12" stroke="currentColor" stroke-width="1.5"/></svg></div>
+          <div><h4>Secure payment via Stripe</h4><p>Industry-standard payment processing</p></div>
+        </div>
+        <div class="bd-item">
+          <div class="bd-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M4 8l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h4>Free cancellation up to 7 days</h4><p>Full refund if plans change</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="r" style="transition-delay:.1s">
+      <div class="book-card">
+        <div class="book-price">
+          <div class="from">From</div>
+          <div class="rate">$350</div>
+          <div class="per">per night &middot; 2 night minimum</div>
+        </div>
+        <form id="bkForm" onsubmit="submitBk(event)">
+          <div class="bfr">
+            <div class="bf"><label>First Name</label><input placeholder="Jane" required></div>
+            <div class="bf"><label>Last Name</label><input placeholder="Smith" required></div>
+          </div>
+          <div class="bf"><label>Email</label><input type="email" placeholder="jane@example.com" required></div>
+          <div class="bf"><label>Phone</label><input type="tel" placeholder="(555) 555-5555"></div>
+          <div class="bfr">
+            <div class="bf"><label>Check-in</label><input type="date" required></div>
+            <div class="bf"><label>Check-out</label><input type="date" required></div>
+          </div>
+          <div class="bfr">
+            <div class="bf"><label>Guests</label><select required><option value="" disabled selected>Select</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>
+            <div class="bf"><label>Bringing a dog?</label><select><option>No</option><option>Yes</option></select></div>
+          </div>
+          <div class="bf"><label>Special requests (optional)</label><textarea placeholder="Anything we should know?"></textarea></div>
+          <button type="submit" class="book-submit">Request to Book</button>
+          <p class="book-note">You won't be charged yet. We'll confirm availability first.</p>
+        </form>
+        <div id="bookOk">
+          <h3>Inquiry received.</h3>
+          <p>Thanks for your interest in Meadow's End Farm. We'll check availability and get back to you within 2 hours with a confirmation and payment link.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">Meadow's End Farm</div>
+  <p>A Vermont Farmhouse Retreat &middot; Chester, Vermont</p>
+  <p class="foot-pw">Direct booking site powered by <a href="https://staydirecthost.com" target="_blank">StayDirect</a></p>
+</footer>
+
+<script>
+const n=document.getElementById('n');
+window.addEventListener('scroll',()=>n.classList.toggle('s',scrollY>80));
+document.querySelectorAll('.r').forEach(el=>{new IntersectionObserver(([e])=>{if(e.isIntersecting)e.target.classList.add('v')},{threshold:.08,rootMargin:'0px 0px -20px 0px'}).observe(el)});
+
+const slides=document.querySelectorAll('.slide');
+const dots=document.querySelectorAll('.sdot');
+let cur=0,timer;
+function goSlide(i){slides[cur].classList.remove('active');dots[cur].classList.remove('active');cur=i;slides[cur].classList.add('active');dots[cur].classList.add('active');resetTimer()}
+function nextSlide(){goSlide((cur+1)%slides.length)}
+function resetTimer(){clearInterval(timer);timer=setInterval(nextSlide,5000)}
+resetTimer();
+
+const lbImgs=['imgs/outsidefront.jpg','imgs/livingroom.jpg','imgs/livingroomside.jpg','imgs/kitchen.jpg','imgs/dining_room.jpg','imgs/mainbr.jpg','imgs/bedroom1.jpg','imgs/bedroom2.jpg','imgs/bedroom3.jpg','imgs/br4.jpg','imgs/patio.jpg','imgs/outsideback.jpg','imgs/outdoor.jpg','imgs/br1.jpg','imgs/br2.jpg'];
+const lbLabels=['The Farmhouse','Living Room','Sitting Area','Kitchen','Dining Room','Main Suite','King Bedroom','Queen Bedroom','Loft Bedroom','Bunk Room','Screened Porch','Backyard','Trails','Bathroom','Second Bath'];
+let lbCur=0;
+function openLB(i){lbCur=i;document.getElementById('lbImg').src=lbImgs[i];document.getElementById('lbCount').textContent=(i+1)+' / '+lbImgs.length+' — '+lbLabels[i];document.getElementById('lb').classList.add('open');document.body.style.overflow='hidden'}
+function closeLB(){document.getElementById('lb').classList.remove('open');document.body.style.overflow=''}
+function navLB(d){lbCur=(lbCur+d+lbImgs.length)%lbImgs.length;document.getElementById('lbImg').src=lbImgs[lbCur];document.getElementById('lbCount').textContent=(lbCur+1)+' / '+lbImgs.length+' — '+lbLabels[lbCur]}
+document.getElementById('lb').addEventListener('click',e=>{if(e.target.id==='lb')closeLB()});
+document.addEventListener('keydown',e=>{if(!document.getElementById('lb').classList.contains('open'))return;if(e.key==='Escape')closeLB();if(e.key==='ArrowRight')navLB(1);if(e.key==='ArrowLeft')navLB(-1)});
+
+function submitBk(e){e.preventDefault();document.getElementById('bkForm').style.display='none';document.getElementById('bookOk').style.display='block'}
+</script>
+</body>
+</html>
